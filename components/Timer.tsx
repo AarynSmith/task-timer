@@ -1,4 +1,6 @@
 import {
+  GestureResponderEvent,
+  Pressable,
   StyleSheet,
   Text,
   TextInput,
@@ -8,82 +10,139 @@ import {
 import { useAsyncStorage } from "@react-native-async-storage/async-storage";
 import { useState, useEffect } from "react";
 
-interface timerData {
-  startTime: Number;
-  endTime: Number;
-  name: String;
+import { Styles } from "../AppStyles";
+
+export interface timerData {
+  name: string;
+  seconds: number;
+  running: boolean;
 }
-const defaultData: timerData = {
-  startTime: 0,
-  endTime: 0,
-  name: "",
+export const defaultData: timerData = {
+  name: "Timer",
+  seconds: 0,
+  running: false,
 };
-export default function Timer(props: { id: String }) {
+export default function Timer(props: {
+  id: string;
+  delete: (event: GestureResponderEvent) => void;
+}) {
   const [nameState, setNameState] = useState<Boolean>(true);
   const [nameInput, setNameInput] = useState("");
   const [timer, setTimer] = useState<timerData>(defaultData);
-  const TimerStorage = useAsyncStorage("@timers/" + props.id);
+  const TimerStorage = useAsyncStorage(props.id);
   const readTimerFromAsync = async () => {
     const val = await TimerStorage.getItem();
     var t = val ? JSON.parse(val) : defaultData;
     setTimer(t);
   };
-  const writeTimersToAsync = async (v: timerData) => {
-    console.log(`Writing ${v} to storage`);
+  const writeTimerToAsync = async (v: timerData) => {
     await TimerStorage.setItem(JSON.stringify(v));
     setTimer(v);
   };
   useEffect(() => {
     readTimerFromAsync();
   }, []);
-  useEffect(() => {});
+
+  useEffect(() => {
+    let interval: any = 0;
+    if (timer.running) {
+      interval = setInterval(() => {
+        writeTimerToAsync({
+          ...timer,
+          seconds: timer.seconds + 1,
+        });
+      }, 1000);
+    } else if (!timer.running && timer.seconds !== 0) {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [timer]);
+
   return (
-    <View style={styles.timer}>
-      <Text>Timer: {props.id}</Text>
-      <TouchableOpacity
+    <View style={Styles.timerCard}>
+      {nameState ? (
+        <TouchableOpacity
+          style={Styles.timerNameRow}
+          onPress={() => {
+            setNameState(!nameState);
+          }}
+        >
+          <Text>Name:</Text>
+          <Text>{timer.name}</Text>
+        </TouchableOpacity>
+      ) : (
+        <View style={Styles.timerNameInput}>
+          <Text>Name:</Text>
+          <TextInput
+            style={Styles.timerNameTextInput}
+            autoFocus
+            defaultValue={timer.name}
+            onChangeText={(e) => {
+              setNameInput(e);
+            }}
+            onKeyPress={(event) => {
+              if (event.nativeEvent.key === "Enter") {
+                writeTimerToAsync({
+                  ...timer,
+                  name: nameInput,
+                });
+                setNameState(!nameState);
+              }
+            }}
+          />
+        </View>
+      )}
+      {/* */}
+
+      <Text>{`Time: ${formatTime(timer.seconds)}`}</Text>
+      <Pressable
+        style={{
+          ...Styles.timerButton,
+          ...Styles.timerStartButton,
+        }}
         onPress={() => {
-          setNameState(!nameState);
+          writeTimerToAsync({
+            ...timer,
+            running: !timer.running,
+          });
         }}
       >
-        <div>
-          Name:
-          {nameState ? (
-            <Text>{timer.name}</Text>
-          ) : (
-            <input
-              autoFocus
-              onChange={(e) => {
-                // console.log(e.target.value);
-                setNameInput(e.target.value);
-              }}
-              // onTextInput={(e) => {
-              //   console.log(e);
-              // }}
-              onKeyUp={(event) => {
-                console.log(event);
-                // if (event.type === "keydown") {
-                if (event.nativeEvent.key === "Enter") {
-                  console.log(nameInput);
-                  writeTimersToAsync({
-                    ...timer,
-                    name: nameInput,
-                  });
-                  setNameState(!nameState);
-                }
-                // }
-              }}
-            />
-          )}
-        </div>
-      </TouchableOpacity>
-      <Text>Start: {timer.startTime.toString()}</Text>
-      <Text>End: {timer.endTime.toString()}</Text>
+        <Text>{timer.running ? "Stop" : "Start"}</Text>
+      </Pressable>
     </View>
   );
 }
-
+const formatTime = (s: number): string => {
+  let rtn = "";
+  if (s > 60 * 60) {
+    rtn += `${Math.floor(s / (60 * 60))}h`;
+    s = s % (60 * 60);
+  }
+  if (s > 60) {
+    rtn += `${Math.floor(s / 60)}m`;
+    s = s % 60;
+  }
+  rtn += `${s}s`;
+  return rtn;
+};
 const styles = StyleSheet.create({
-  timer: {
-    borderWidth: 1,
+  timerButton: {
+    backgroundColor: "#66bb6a",
+    flex: 1,
+    width: "75%",
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: 35,
+  },
+  deleteButton: {
+    height: 20,
+    elevation: 4,
+    // Material design blue from https://material.google.com/style/color.html#color-color-palette
+    backgroundColor: "#2196F3",
+    borderRadius: 2,
+  },
+  deleteText: {
+    color: "white",
+    fontWeight: "500",
   },
 });
