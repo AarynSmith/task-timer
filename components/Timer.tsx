@@ -1,7 +1,6 @@
 import {
   GestureResponderEvent,
   Pressable,
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
@@ -11,6 +10,7 @@ import { useAsyncStorage } from "@react-native-async-storage/async-storage";
 import { useState, useEffect } from "react";
 
 import { Styles } from "../AppStyles";
+import DeleteTimer from "./DeleteTimer";
 
 export interface timerData {
   name: string;
@@ -22,8 +22,10 @@ export const defaultData: timerData = {
   seconds: 0,
   running: false,
 };
+
 export default function Timer(props: {
   id: string;
+  delMode: boolean;
   delete: (event: GestureResponderEvent) => void;
 }) {
   const [nameState, setNameState] = useState<Boolean>(true);
@@ -58,59 +60,61 @@ export default function Timer(props: {
     return () => clearInterval(interval);
   }, [timer]);
 
-  return (
-    <View style={Styles.timerCard}>
-      {nameState ? (
-        <TouchableOpacity
-          style={Styles.timerNameRow}
+  if (!props.delMode)
+    return (
+      <View style={Styles.timerCard}>
+        {nameState ? (
+          <TouchableOpacity
+            style={Styles.timerNameRow}
+            onPress={() => {
+              setNameState(!nameState);
+            }}
+          >
+            <Text>Name: </Text>
+            <Text>{timer.name}</Text>
+          </TouchableOpacity>
+        ) : (
+          <View style={Styles.timerNameInput}>
+            <Text>Name:</Text>
+            <TextInput
+              style={Styles.timerNameTextInput}
+              autoFocus
+              defaultValue={timer.name}
+              onChangeText={(e) => {
+                setNameInput(e);
+              }}
+              onKeyPress={(event) => {
+                if (event.nativeEvent.key === "Enter") {
+                  writeTimerToAsync({
+                    ...timer,
+                    name: nameInput,
+                  });
+                  setNameState(!nameState);
+                }
+              }}
+            />
+          </View>
+        )}
+        {/* */}
+
+        <Text>{`Time: ${formatTime(timer.seconds)}`}</Text>
+        <Pressable
+          style={{
+            ...Styles.timerButton,
+            ...Styles.timerStartButton,
+          }}
           onPress={() => {
-            setNameState(!nameState);
+            writeTimerToAsync({
+              ...timer,
+              running: !timer.running,
+            });
           }}
         >
-          <Text>Name:</Text>
-          <Text>{timer.name}</Text>
-        </TouchableOpacity>
-      ) : (
-        <View style={Styles.timerNameInput}>
-          <Text>Name:</Text>
-          <TextInput
-            style={Styles.timerNameTextInput}
-            autoFocus
-            defaultValue={timer.name}
-            onChangeText={(e) => {
-              setNameInput(e);
-            }}
-            onKeyPress={(event) => {
-              if (event.nativeEvent.key === "Enter") {
-                writeTimerToAsync({
-                  ...timer,
-                  name: nameInput,
-                });
-                setNameState(!nameState);
-              }
-            }}
-          />
-        </View>
-      )}
-      {/* */}
-
-      <Text>{`Time: ${formatTime(timer.seconds)}`}</Text>
-      <Pressable
-        style={{
-          ...Styles.timerButton,
-          ...Styles.timerStartButton,
-        }}
-        onPress={() => {
-          writeTimerToAsync({
-            ...timer,
-            running: !timer.running,
-          });
-        }}
-      >
-        <Text>{timer.running ? "Stop" : "Start"}</Text>
-      </Pressable>
-    </View>
-  );
+          <Text>{timer.running ? "Stop" : "Start"}</Text>
+        </Pressable>
+      </View>
+    );
+  return <DeleteTimer id={props.id} delete={props.delete} />;
 }
 const formatTime = (s: number): string => {
   let rtn = "";

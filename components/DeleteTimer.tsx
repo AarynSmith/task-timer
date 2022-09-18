@@ -1,11 +1,14 @@
-import { Pressable, Text, View } from "react-native";
+import { Pressable, Text, View, GestureResponderEvent } from "react-native";
 import { useAsyncStorage } from "@react-native-async-storage/async-storage";
 import { useState, useEffect } from "react";
 
 import { Styles } from "../AppStyles";
 import { timerData, defaultData } from "./Timer";
 
-export default function DeleteTimer(props: { id: string }) {
+export default function DeleteTimer(props: {
+  id: string;
+  delete: (event: GestureResponderEvent) => void;
+}) {
   const [timer, setTimer] = useState<timerData>(defaultData);
   const TimerStorage = useAsyncStorage(props.id);
   const readTimerFromAsync = async () => {
@@ -27,7 +30,7 @@ export default function DeleteTimer(props: { id: string }) {
           ...Styles.timerButton,
           ...Styles.timerDeleteButton,
         }}
-        onPress={() => {}}
+        onPress={props.delete}
       >
         <Text style={Styles.timerButtonText}>Delete</Text>
       </Pressable>

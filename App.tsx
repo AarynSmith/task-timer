@@ -40,18 +40,17 @@ export default function App() {
   return (
     <View style={Styles.appContainer}>
       <View style={Styles.timersContainer}>
-        {!deleteButtons
-          ? timers.map((v, i) => (
-              <Timer
-                key={i}
-                id={v}
-                delete={async () => {
-                  await deleteTimer(v);
-                  readTimersFromAsync();
-                }}
-              />
-            ))
-          : timers.map((v, i) => <DeleteTimer key={i} id={v} />)}
+        {timers.map((v) => (
+          <Timer
+            key={v}
+            id={v}
+            delMode={deleteButtons}
+            delete={async () => {
+              await deleteTimer(v);
+              readTimersFromAsync();
+            }}
+          />
+        ))}
       </View>
       <View style={Styles.buttonRow}>
         {!deleteButtons ? (
