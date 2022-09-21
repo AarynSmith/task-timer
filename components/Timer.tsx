@@ -10,8 +10,8 @@ import { useAsyncStorage } from "@react-native-async-storage/async-storage";
 import { useState, useEffect } from "react";
 
 import { Styles } from "../AppStyles";
-import DeleteTimer from "./DeleteTimer";
 import { formatTime } from "../Utilities";
+import DeleteButton from "./DeleteButton";
 
 export interface timerData {
   name: string;
@@ -61,43 +61,41 @@ export default function Timer(props: {
     return () => clearInterval(interval);
   }, [timer]);
 
-  if (!props.delMode)
-    return (
-      <View style={Styles.timerCard}>
-        {nameState ? (
-          <TouchableOpacity
-            style={Styles.timerNameRow}
-            onPress={() => {
-              setNameState(!nameState);
+  return (
+    <View style={Styles.timerCard}>
+      {nameState ? (
+        <TouchableOpacity
+          style={Styles.timerNameRow}
+          onPress={() => {
+            setNameState(!nameState);
+          }}
+        >
+          <Text>{timer.name}</Text>
+        </TouchableOpacity>
+      ) : (
+        <View style={Styles.timerNameInput}>
+          <TextInput
+            style={Styles.timerNameTextInput}
+            autoFocus
+            defaultValue={timer.name}
+            onChangeText={(e) => {
+              setNameInput(e);
             }}
-          >
-            {/* <Text>Name: </Text> */}
-            <Text>{timer.name}</Text>
-          </TouchableOpacity>
-        ) : (
-          <View style={Styles.timerNameInput}>
-            <TextInput
-              style={Styles.timerNameTextInput}
-              autoFocus
-              defaultValue={timer.name}
-              onChangeText={(e) => {
-                setNameInput(e);
-              }}
-              onKeyPress={(event) => {
-                if (event.nativeEvent.key === "Enter") {
-                  writeTimerToAsync({
-                    ...timer,
-                    name: nameInput,
-                  });
-                  setNameState(!nameState);
-                }
-              }}
-            />
-          </View>
-        )}
-        {/* */}
+            onKeyPress={(event) => {
+              if (event.nativeEvent.key === "Enter") {
+                writeTimerToAsync({
+                  ...timer,
+                  name: nameInput,
+                });
+                setNameState(!nameState);
+              }
+            }}
+          />
+        </View>
+      )}
 
-        <Text>{formatTime(timer.seconds)}</Text>
+      <Text>{formatTime(timer.seconds)}</Text>
+      {!props.delMode ? (
         <Pressable
           style={{
             ...Styles.timerButton,
@@ -112,7 +110,9 @@ export default function Timer(props: {
         >
           <Text>{timer.running ? "Stop" : "Start"}</Text>
         </Pressable>
-      </View>
-    );
-  return <DeleteTimer id={props.id} delete={props.delete} />;
+      ) : (
+        <DeleteButton delete={props.delete} />
+      )}
+    </View>
+  );
 }

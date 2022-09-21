@@ -6,7 +6,6 @@ import { v4 as uuidv4 } from "uuid";
 
 import { Styles } from "./AppStyles";
 import Timer, { defaultData } from "./components/Timer";
-import DeleteTimer from "./components/DeleteTimer";
 
 export default function App() {
   const [timers, setTimers] = useState<string[]>([]);
