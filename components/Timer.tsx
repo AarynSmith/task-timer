@@ -11,6 +11,7 @@ import { useState, useEffect } from "react";
 
 import { Styles } from "../AppStyles";
 import DeleteTimer from "./DeleteTimer";
+import { formatTime } from "../Utilities";
 
 export interface timerData {
   name: string;
@@ -70,12 +71,11 @@ export default function Timer(props: {
               setNameState(!nameState);
             }}
           >
-            <Text>Name: </Text>
+            {/* <Text>Name: </Text> */}
             <Text>{timer.name}</Text>
           </TouchableOpacity>
         ) : (
           <View style={Styles.timerNameInput}>
-            <Text>Name:</Text>
             <TextInput
               style={Styles.timerNameTextInput}
               autoFocus
@@ -97,7 +97,7 @@ export default function Timer(props: {
         )}
         {/* */}
 
-        <Text>{`Time: ${formatTime(timer.seconds)}`}</Text>
+        <Text>{formatTime(timer.seconds)}</Text>
         <Pressable
           style={{
             ...Styles.timerButton,
@@ -116,16 +116,3 @@ export default function Timer(props: {
     );
   return <DeleteTimer id={props.id} delete={props.delete} />;
 }
-const formatTime = (s: number): string => {
-  let rtn = "";
-  if (s > 60 * 60) {
-    rtn += `${Math.floor(s / (60 * 60))}h`;
-    s = s % (60 * 60);
-  }
-  if (s > 60) {
-    rtn += `${Math.floor(s / 60)}m`;
-    s = s % 60;
-  }
-  rtn += `${s}s`;
-  return rtn;
-};
