@@ -17,11 +17,13 @@ export interface timerData {
   name: string;
   seconds: number;
   running: boolean;
+  creationTime: number;
 }
 export const defaultData: timerData = {
   name: "Timer",
   seconds: 0,
   running: false,
+  creationTime: 0,
 };
 
 export default function Timer(props: {

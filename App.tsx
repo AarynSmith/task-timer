@@ -5,25 +5,50 @@ import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import { Styles } from "./AppStyles";
-import Timer, { defaultData } from "./components/Timer";
+import Timer, { defaultData, timerData } from "./components/Timer";
 
 export default function App() {
   const [timers, setTimers] = useState<string[]>([]);
+  const [timerMap, setTimersMap] = useState<Map<string, timerData>>(new Map());
   const [deleteButtons, setDeleteButtons] = useState<boolean>(false);
+
+  const sortTimers = (a: string, b: string): number =>
+    (timerMap.get(a)?.creationTime || 0) - (timerMap.get(b)?.creationTime || 0);
 
   const readTimersFromAsync = async () => {
     const allKeys = await AsyncStorage.getAllKeys();
     const t = allKeys.filter((v) => v.startsWith("@timers/"));
     console.log("Got " + t.length + " timers", t);
+    const allTimers = await AsyncStorage.multiGet(t);
+    console.log("Got timers data");
+    setTimersMap(
+      new Map<string, timerData>(
+        allTimers.map(([k, v]) => [k, JSON.parse(v || "")])
+      )
+    );
     setTimers(t);
   };
 
   const addTimer = async (v: string) => {
     const key = `@timers/${v}`;
-    AsyncStorage.setItem(key, JSON.stringify(defaultData));
+    const d = new Date();
+    const time = d.getTime();
+    AsyncStorage.setItem(
+      key,
+      JSON.stringify({
+        ...defaultData,
+        creationTime: time,
+      })
+    );
     const t = timers.slice();
     t.push(key);
-    setTimers(t);
+    timerMap.set(key, {
+      ...defaultData,
+      creationTime: time,
+    });
+
+    setTimers(t.sort(sortTimers));
+    setTimersMap(new Map(timerMap));
   };
 
   const deleteTimer = async (v: string) => {
@@ -39,7 +64,7 @@ export default function App() {
   return (
     <View style={Styles.appContainer}>
       <View style={Styles.timersContainer}>
-        {timers.map((v) => (
+        {timers.sort(sortTimers).map((v) => (
           <Timer
             key={v}
             id={v}
