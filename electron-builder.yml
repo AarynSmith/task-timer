@@ -1,8 +1,0 @@
-win:
-  target:
-    -target: portable
-    arch:
-      - x64
-mac:
-  target:
-    -target: pkg
