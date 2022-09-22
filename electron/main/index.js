@@ -14,7 +14,7 @@ function createMainWindow() {
     width: 560,
     height: 342,
     webPreferences: { nodeIntegration: true },
-    alwaysOnTop: true,
+    alwaysOnTop: false,
   });
 
   if (isDevelopment) {
