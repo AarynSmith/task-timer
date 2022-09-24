@@ -39,6 +39,7 @@ export default function Timer(props: {
     const val = await TimerStorage.getItem();
     var t = val ? JSON.parse(val) : defaultData;
     setTimer(t);
+    setNameInput(t.name);
   };
   const writeTimerToAsync = async (v: timerData) => {
     await TimerStorage.setItem(JSON.stringify(v));
@@ -85,10 +86,14 @@ export default function Timer(props: {
             }}
             onKeyPress={(event) => {
               if (event.nativeEvent.key === "Enter") {
-                writeTimerToAsync({
-                  ...timer,
-                  name: nameInput,
-                });
+                if (nameInput === "") {
+                  setNameInput(timer.name);
+                } else {
+                  writeTimerToAsync({
+                    ...timer,
+                    name: nameInput,
+                  });
+                }
                 setNameState(!nameState);
               }
             }}
