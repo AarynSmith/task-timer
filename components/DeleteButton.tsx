@@ -13,7 +13,7 @@ export default function DeleteButton(props: {
       }}
       onPress={props.delete}
     >
-      <Text style={Styles.timerButtonText}>Delete</Text>
+      <Text style={Styles.timerDeleteButtonText}>Delete</Text>
     </Pressable>
   );
 }

@@ -66,60 +66,76 @@ export default function Timer(props: {
 
   return (
     <View style={Styles.timerCard}>
-      {nameState ? (
-        <TouchableOpacity
-          style={Styles.timerNameRow}
-          onPress={() => {
-            setNameState(!nameState);
-          }}
-        >
-          <Text>{timer.name}</Text>
-        </TouchableOpacity>
-      ) : (
-        <View style={Styles.timerNameInput}>
-          <TextInput
-            style={Styles.timerNameTextInput}
-            autoFocus
-            defaultValue={timer.name}
-            onChangeText={(e) => {
-              setNameInput(e);
+      <View style={Styles.timerTopRow}>
+        {/* Name */}
+        {nameState ? (
+          <TouchableOpacity
+            style={Styles.timerNameRow}
+            onPress={() => {
+              setNameState(!nameState);
             }}
-            onKeyPress={(event) => {
-              if (event.nativeEvent.key === "Enter") {
-                if (nameInput === "") {
-                  setNameInput(timer.name);
-                } else {
-                  writeTimerToAsync({
-                    ...timer,
-                    name: nameInput,
-                  });
+          >
+            <Text>{timer.name}</Text>
+          </TouchableOpacity>
+        ) : (
+          <View style={Styles.timerNameInput}>
+            <TextInput
+              style={Styles.timerNameTextInput}
+              autoFocus
+              defaultValue={timer.name}
+              onChangeText={(e) => {
+                setNameInput(e);
+              }}
+              onKeyPress={(event) => {
+                if (event.nativeEvent.key === "Enter") {
+                  if (nameInput === "") {
+                    setNameInput(timer.name);
+                  } else {
+                    writeTimerToAsync({
+                      ...timer,
+                      name: nameInput,
+                    });
+                  }
+                  setNameState(!nameState);
                 }
-                setNameState(!nameState);
-              }
+              }}
+            />
+          </View>
+        )}
+        {/* End Name */}
+        {/* Button */}
+        {!props.delMode ? (
+          <Pressable
+            style={
+              !timer.running
+                ? {
+                    ...Styles.timerButton,
+                    ...Styles.timerStartButton,
+                  }
+                : {
+                    ...Styles.timerButton,
+                    ...Styles.timerStopButton,
+                  }
+            }
+            onPress={() => {
+              writeTimerToAsync({
+                ...timer,
+                running: !timer.running,
+              });
             }}
-          />
-        </View>
-      )}
-
-      <Text>{formatTime(timer.seconds)}</Text>
-      {!props.delMode ? (
-        <Pressable
-          style={{
-            ...Styles.timerButton,
-            ...Styles.timerStartButton,
-          }}
-          onPress={() => {
-            writeTimerToAsync({
-              ...timer,
-              running: !timer.running,
-            });
-          }}
-        >
-          <Text>{timer.running ? "Stop" : "Start"}</Text>
-        </Pressable>
-      ) : (
-        <DeleteButton delete={props.delete} />
-      )}
+          >
+            <Text>{timer.running ? "Stop" : "Start"}</Text>
+          </Pressable>
+        ) : (
+          <DeleteButton delete={props.delete} />
+        )}
+        {/* End Button */}
+      </View>
+      {/* Time */}
+      <View style={Styles.timerTimeTextView}>
+        <Text style={Styles.timerTimeText}>{formatTime(timer.seconds)}</Text>
+      </View>
+      {/* End Time */}
     </View>
   );
 }

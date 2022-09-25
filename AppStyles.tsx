@@ -1,8 +1,24 @@
 import { StyleSheet, ViewStyle } from "react-native";
+const timerWidth = 176;
+const timerHeight = 76;
+const timerMargin = 5;
+const timerRowWidth = 3;
+
+const colors = {
+  timerBg: "#dcdcdc",
+  deleteBtn: "#c40707",
+  startBtn: "#27d465",
+  stopBtn: "#bf7e0f",
+};
 
 const flexRow: ViewStyle = {
   flex: 1,
   flexDirection: "row",
+};
+
+const debugInd: ViewStyle = {
+  borderWidth: 1,
+  borderColor: "red",
 };
 
 export const Styles = StyleSheet.create({
@@ -16,8 +32,8 @@ export const Styles = StyleSheet.create({
     ...flexRow,
     flexWrap: "wrap",
     alignContent: "flex-start",
-    borderWidth: 1,
-    minWidth: (181 + 5) * 3 + 1,
+    width: "100%",
+    minWidth: (timerWidth + timerMargin) * timerRowWidth + 1,
   },
   buttonRow: {
     ...flexRow,
@@ -28,47 +44,82 @@ export const Styles = StyleSheet.create({
     padding: 5,
   },
   timerCard: {
-    borderWidth: 1,
-    maxWidth: 176,
-    minWidth: 176,
-    minHeight: 76,
-    maxHeight: 76,
     flex: 1,
-    justifyContent: "center",
+    flexDirection: "column",
+    justifyContent: "flex-start",
     alignItems: "center",
+
+    maxWidth: timerWidth,
+    minWidth: timerWidth,
+    minHeight: timerHeight,
+    maxHeight: timerHeight,
+
+    borderWidth: 1,
+    borderRadius: 5,
+
+    backgroundColor: colors.timerBg,
+
     shadowOffset: {
       height: 4,
       width: 4,
     },
     shadowRadius: 4,
     shadowOpacity: 0.25,
-    margin: 5,
+    margin: timerMargin,
+  },
+  timerTopRow: {
+    ...flexRow,
+
+    width: "100%",
+    // borderWidth: 1,
+    overflow: "hidden",
+    maxHeight: 25,
+    minHeight: 25,
   },
   timerNameRow: {
     ...flexRow,
+
+    alignItems: "center",
+    justifyContent: "center",
+
+    width: "50%",
+    textAlign: "center",
+    textAlignVertical: "center",
   },
   timerNameInput: {
     ...flexRow,
   },
   timerNameTextInput: {
     height: 20,
+    width: "100%",
   },
   timerButton: {
     flex: 1,
-    width: "75%",
+    width: "50%",
     alignItems: "center",
     justifyContent: "center",
-    minHeight: 35,
-    maxHeight: 35,
-  },
-  timerButtonText: {
-    color: "white",
-    fontWeight: "500",
+    height: "100%",
+    borderTopRightRadius: 5,
   },
   timerStartButton: {
-    backgroundColor: "#66bb6a",
+    backgroundColor: colors.startBtn,
+  },
+  timerStopButton: {
+    backgroundColor: colors.stopBtn,
   },
   timerDeleteButton: {
-    backgroundColor: "#B00020",
+    backgroundColor: colors.deleteBtn,
+  },
+  timerDeleteButtonText: {
+    color: "white",
+    fontWeight: "700",
+  },
+  timerTimeTextView: {
+    ...flexRow,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  timerTimeText: {
+    fontSize: 48,
   },
 });
