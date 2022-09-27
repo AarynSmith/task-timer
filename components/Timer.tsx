@@ -1,6 +1,5 @@
 import {
   GestureResponderEvent,
-  Pressable,
   Text,
   TextInput,
   TouchableOpacity,
@@ -70,12 +69,12 @@ export default function Timer(props: {
         {/* Name */}
         {nameState ? (
           <TouchableOpacity
-            style={Styles.timerNameRow}
+            style={Styles.timerNameTouchable}
             onPress={() => {
               setNameState(!nameState);
             }}
           >
-            <Text>{timer.name}</Text>
+            <Text style={Styles.timerNameText}>{timer.name}</Text>
           </TouchableOpacity>
         ) : (
           <View style={Styles.timerNameInput}>
@@ -105,7 +104,7 @@ export default function Timer(props: {
         {/* End Name */}
         {/* Button */}
         {!props.delMode ? (
-          <Pressable
+          <TouchableOpacity
             style={
               !timer.running
                 ? {
@@ -124,8 +123,10 @@ export default function Timer(props: {
               });
             }}
           >
-            <Text>{timer.running ? "Stop" : "Start"}</Text>
-          </Pressable>
+            <Text style={Styles.timerStartStopButtonText}>
+              {timer.running ? "Stop" : "Start"}
+            </Text>
+          </TouchableOpacity>
         ) : (
           <DeleteButton delete={props.delete} />
         )}

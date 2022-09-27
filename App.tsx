@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StatusBar } from "expo-status-bar";
-import { View, Button } from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
@@ -63,6 +63,7 @@ export default function App() {
 
   return (
     <View style={Styles.appContainer}>
+      <Text style={Styles.appText}>hello</Text>
       <View style={Styles.timersContainer}>
         {timers.sort(sortTimers).map((v) => (
           <Timer
@@ -78,22 +79,27 @@ export default function App() {
       </View>
       <View style={Styles.buttonRow}>
         {!deleteButtons ? (
-          <Button
-            title="Add Timer"
+          <TouchableOpacity
+            style={Styles.appAddButton}
             onPress={() => {
               addTimer(uuidv4());
             }}
-          />
+          >
+            <Text style={Styles.appAddButtonText}>Add Timer</Text>
+          </TouchableOpacity>
         ) : (
           <></>
         )}
-        <Button
-          title={deleteButtons ? "Return" : "Delete Timers"}
-          color="#B00020"
+        <TouchableOpacity
+          style={Styles.appDeleteButton}
           onPress={() => {
             setDeleteButtons(!deleteButtons);
           }}
-        />
+        >
+          <Text style={Styles.appDeleteButtonText}>
+            {deleteButtons ? "Return" : "Delete Timers"}
+          </Text>
+        </TouchableOpacity>
       </View>
 
       <StatusBar style="auto" />

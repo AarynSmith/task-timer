@@ -4,12 +4,37 @@ const timerHeight = 76;
 const timerMargin = 5;
 const timerRowWidth = 3;
 
-const colors = {
+const colors1 = {
+  textColor: "#000",
+  windowBg: "#fff",
   timerBg: "#dcdcdc",
-  deleteBtn: "#c40707",
   startBtn: "#27d465",
+  startTxt: "#000",
   stopBtn: "#bf7e0f",
+  stopTxt: "#000",
+  deleteBtn: "#c40707",
+  deleteTxt: "#fff",
 };
+
+const theme2 = {
+  "Dark Jungle Green": "#002626",
+  "Warm Black": "#0e4749",
+  "Yellow Green": "#95c623",
+  Persimmon: "#e55812",
+  Alabaster: "#efe7da",
+};
+const colors2 = {
+  textColor: theme2["Dark Jungle Green"],
+  windowBg: theme2.Alabaster,
+  timerBg: theme2.Alabaster,
+  startBtn: theme2["Warm Black"],
+  startTxt: theme2.Alabaster,
+  stopBtn: theme2["Yellow Green"],
+  stopTxt: theme2["Dark Jungle Green"],
+  deleteBtn: theme2.Persimmon,
+  deleteTxt: theme2.Alabaster,
+};
+const theme = colors2;
 
 const flexRow: ViewStyle = {
   flex: 1,
@@ -24,12 +49,17 @@ const debugInd: ViewStyle = {
 export const Styles = StyleSheet.create({
   appContainer: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: theme.windowBg,
+    color: theme.textColor,
     alignItems: "center",
     justifyContent: "center",
   },
+  appText: {
+    color: "inherit",
+  },
   timersContainer: {
     ...flexRow,
+    color: "inherit",
     flexWrap: "wrap",
     alignContent: "flex-start",
     width: "100%",
@@ -44,6 +74,8 @@ export const Styles = StyleSheet.create({
     padding: 5,
   },
   timerCard: {
+    color: "inherit",
+
     flex: 1,
     flexDirection: "column",
     justifyContent: "flex-start",
@@ -57,7 +89,7 @@ export const Styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
 
-    backgroundColor: colors.timerBg,
+    backgroundColor: theme.timerBg,
 
     shadowOffset: {
       height: 4,
@@ -69,15 +101,16 @@ export const Styles = StyleSheet.create({
   },
   timerTopRow: {
     ...flexRow,
+    color: "inherit",
 
     width: "100%",
-    // borderWidth: 1,
     overflow: "hidden",
     maxHeight: 25,
     minHeight: 25,
   },
-  timerNameRow: {
+  timerNameTouchable: {
     ...flexRow,
+    color: "inherit",
 
     alignItems: "center",
     justifyContent: "center",
@@ -86,8 +119,12 @@ export const Styles = StyleSheet.create({
     textAlign: "center",
     textAlignVertical: "center",
   },
+  timerNameText: {
+    color: "inherit",
+  },
   timerNameInput: {
     ...flexRow,
+    color: "inherit",
   },
   timerNameTextInput: {
     height: 20,
@@ -102,16 +139,22 @@ export const Styles = StyleSheet.create({
     borderTopRightRadius: 5,
   },
   timerStartButton: {
-    backgroundColor: colors.startBtn,
+    backgroundColor: theme.startBtn,
+    color: theme.startTxt,
+  },
+  timerStartStopButtonText: {
+    color: "inherit",
   },
   timerStopButton: {
-    backgroundColor: colors.stopBtn,
+    backgroundColor: theme.stopBtn,
+    color: theme.stopTxt,
   },
   timerDeleteButton: {
-    backgroundColor: colors.deleteBtn,
+    backgroundColor: theme.deleteBtn,
+    color: theme.deleteTxt,
   },
   timerDeleteButtonText: {
-    color: "white",
+    color: "inherit",
     fontWeight: "700",
   },
   timerTimeTextView: {
@@ -120,6 +163,15 @@ export const Styles = StyleSheet.create({
     justifyContent: "center",
   },
   timerTimeText: {
+    color: "inherit",
     fontSize: 48,
+  },
+  appAddButton: {},
+  appAddButtonText: {
+    color: "inherit",
+  },
+  appDeleteButton: {},
+  appDeleteButtonText: {
+    color: "inherit",
   },
 });
