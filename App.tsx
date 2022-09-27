@@ -63,7 +63,6 @@ export default function App() {
 
   return (
     <View style={Styles.appContainer}>
-      <Text style={Styles.appText}>hello</Text>
       <View style={Styles.timersContainer}>
         {timers.sort(sortTimers).map((v) => (
           <Timer

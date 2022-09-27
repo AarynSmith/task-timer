@@ -54,9 +54,6 @@ export const Styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  appText: {
-    color: "inherit",
-  },
   timersContainer: {
     ...flexRow,
     color: "inherit",
