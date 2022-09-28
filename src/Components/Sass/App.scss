@@ -1,49 +1,31 @@
-@import "../../index";
+@use "./Variables" as v;
 
-.App {
-  @extend %dragable;
-  text-align: center;
+$debugBorder: 0px;
 
-  &-logo {
-    height: 40vmin;
-    pointer-events: none;
-  }
+@mixin debug-box($color) {
+  box-sizing: border-box;
+  border: $debugBorder dashed $color;
 }
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 15s linear;
-  }
-}
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+
+.appContainer {
   display: flex;
-  flex-direction: column;
+  flex: 1;
+  background-color: v.$themeWindowBg;
+  color: v.$themeTextColor;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-.App-link {
-  color: $react-color;
-}
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-.button {
-  @extend button;
-  font-size: calc(1vmin + 10px);
-  background-color: #00ff88;
-  color: #000;
-  padding-left: 1vmin;
-  padding-right: 1vmin;
-  border-radius: 5px;
-  &:hover {
-    cursor: pointer;
+
+  .timerContainer {
+    @include debug-box(blue);
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .timer {
+      @include debug-box(green);
+      width: v.$timerWidth;
+      margin: v.$timerMargin;
+      background-color: scale-color((v.$themeTimerBg), $lightness: +70%);
+    }
   }
 }

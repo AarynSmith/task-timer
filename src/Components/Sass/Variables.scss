@@ -1,0 +1,37 @@
+$Alabaster: #efe7da;
+$Persimmon: #e55812;
+$DarkJungleGreen: #002626;
+$WarmBlack: #0e4749;
+$YellowGreen: #95c623;
+
+$themeWindowBg: $Alabaster;
+$themeTextColor: $DarkJungleGreen;
+$themeTimerBg: $Alabaster;
+$themeStartBtn: $WarmBlack;
+$themeStartTxt: $Alabaster;
+$themeStopBtn: $YellowGreen;
+$themeStopTxt: $DarkJungleGreen;
+$themeDeleteBtn: $Persimmon;
+$themeDeleteTxt: $Alabaster;
+
+$timerWidth: 175px;
+$timerHeight: 76px;
+$timerMargin: 5px;
+$timerRowWidth: 3;
+
+:export {
+  themeWindowBg: $themeWindowBg;
+  themeTextColor: $themeTextColor;
+  themeTimerBg: $themeTimerBg;
+  themeStartBtn: $themeStartBtn;
+  themeStartTxt: $themeStartTxt;
+  themeStopBtn: $themeStopBtn;
+  themeStopTxt: $themeStopTxt;
+  themeDeleteBtn: $themeDeleteBtn;
+  themeDeleteTxt: $themeDeleteTxt;
+
+  timerWidth: $timerWidth;
+  timerHeight: $timerHeight;
+  timerMargin: $timerMargin;
+  timerRowWidth: $timerRowWidth;
+}
