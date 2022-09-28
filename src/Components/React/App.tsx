@@ -27,12 +27,8 @@ export default function App() {
     setTimers(timerList);
   };
   const deleteTimer = (id: string) => {
-    console.log(`Deleting Timer ${id}`);
     let timerList = timers.slice();
-    console.log(`TimerList is ${timerList.length} items`);
     timerList = timerList.filter((v: timerData) => v.id !== id);
-    console.log(`TimerList is ${timerList.length} items`);
-
     setTimers(timerList);
   };
 
