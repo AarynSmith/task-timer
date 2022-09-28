@@ -62,8 +62,22 @@ $debugBorder: 0px;
         .button {
           @include centerContent();
           width: 50%;
-          background-color: green;
           border-top-right-radius: 5px;
+          text-decoration: none;
+          border: none;
+          &:focus {
+            outline: none;
+            box-shadow: none;
+          }
+
+          &.stop {
+            background-color: v.$themeStopBtn;
+            color: v.$themeStopTxt;
+          }
+          &.start {
+            background-color: v.$themeStartBtn;
+            color: v.$themeStartTxt;
+          }
         }
       }
       .time {
