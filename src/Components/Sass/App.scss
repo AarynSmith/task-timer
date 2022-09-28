@@ -7,7 +7,14 @@ $debugBorder: 0px;
   border: $debugBorder dashed $color;
 }
 
-.appContainer {
+@mixin centerContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#appContainer {
   display: flex;
   flex: 1;
   background-color: v.$themeWindowBg;
@@ -16,16 +23,53 @@ $debugBorder: 0px;
   justify-content: center;
 
   .timerContainer {
-    @include debug-box(blue);
+    // @include debug-box(blue);
     display: inline-flex;
     flex-wrap: wrap;
     justify-content: center;
 
     .timer {
-      @include debug-box(green);
-      width: v.$timerWidth;
+      // @include debug-box(green);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+
+      min-width: v.$timerWidth;
+      max-width: v.$timerWidth;
+      min-height: v.$timerHeight;
+      max-height: v.$timerHeight;
+
+      background-color: v.$themeTimerBg;
+
       margin: v.$timerMargin;
-      background-color: scale-color((v.$themeTimerBg), $lightness: +70%);
+      border-width: 1px;
+      border-radius: 5px;
+      box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.25);
+
+      .topRow {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        overflow: hidden;
+        max-height: 25px;
+        min-height: 25px;
+
+        .name {
+          @include centerContent();
+          width: 50%;
+        }
+        .button {
+          @include centerContent();
+          width: 50%;
+          background-color: green;
+          border-top-right-radius: 5px;
+        }
+      }
+      .time {
+        @include centerContent();
+        font-size: 30pt;
+      }
     }
   }
 }
