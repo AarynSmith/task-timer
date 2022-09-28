@@ -16,20 +16,21 @@ $debugBorder: 0px;
 
 #appContainer {
   display: flex;
-  flex: 1;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
   background-color: v.$themeWindowBg;
   color: v.$themeTextColor;
-  align-items: center;
-  justify-content: center;
 
   .timerContainer {
-    // @include debug-box(blue);
     display: inline-flex;
     flex-wrap: wrap;
     justify-content: center;
 
+    overflow: scroll;
+
     .timer {
-      // @include debug-box(green);
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
@@ -59,31 +60,56 @@ $debugBorder: 0px;
           @include centerContent();
           width: 50%;
         }
-        .button {
-          @include centerContent();
-          width: 50%;
-          border-top-right-radius: 5px;
-          text-decoration: none;
-          border: none;
-          &:focus {
-            outline: none;
-            box-shadow: none;
-          }
+      }
+      button {
+        @include centerContent();
+        width: 50%;
+        border-top-right-radius: 5px;
+        text-decoration: none;
+        border: none;
+        &:focus {
+          outline: none;
+          box-shadow: none;
+        }
 
-          &.stop {
-            background-color: v.$themeStopBtn;
-            color: v.$themeStopTxt;
-          }
-          &.start {
-            background-color: v.$themeStartBtn;
-            color: v.$themeStartTxt;
-          }
+        &.delete {
+          background-color: v.$themeDeleteBtn;
+          color: v.$themeDeleteTxt;
+          font-weight: bold;
+        }
+        &.stop {
+          background-color: v.$themeStopBtn;
+          color: v.$themeStopTxt;
+        }
+        &.start {
+          background-color: v.$themeStartBtn;
+          color: v.$themeStartTxt;
         }
       }
-      .time {
-        @include centerContent();
-        font-size: 30pt;
-      }
+    }
+
+    .time {
+      @include centerContent();
+      font-size: 30pt;
+    }
+  }
+  .buttonBar {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 100%;
+
+    border-top: 1px solid black;
+    background-color: v.$themeBottomBarBg;
+
+    .buttonRow {
+      width: 60%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
     }
   }
 }

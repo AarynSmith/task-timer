@@ -4,8 +4,8 @@ $DarkJungleGreen: #002626;
 $WarmBlack: #0e4749;
 $YellowGreen: #95c623;
 
-// $themeWindowBg: $scale-color($AAlabasterlabaster, $lightness: 20%);
-$themeWindowBg: white;
+$themeWindowBg: scale-color($Alabaster, $lightness: -10%);
+$themeBottomBarBg: scale-color($themeWindowBg, $lightness: -10%);
 
 $themeTextColor: $DarkJungleGreen;
 $themeTimerBg: $Alabaster;
