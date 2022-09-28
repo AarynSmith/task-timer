@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocalStorage } from "../../useLocalStorage";
 import { formatTime } from "../../Utilities";
 
@@ -25,6 +25,21 @@ export default function Timer(props: {
     ...defaultTimerData,
     id: props.id,
   });
+
+  useEffect(() => {
+    let interval: string | NodeJS.Timeout = "";
+    if (timer.running) {
+      interval = setInterval(() => {
+        setTimer({
+          ...timer,
+          seconds: timer.seconds + 1,
+        });
+      }, 1000);
+    } else if (!timer.running && timer.seconds !== 0) {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [timer, setTimer]);
 
   return (
     <div className="timer">
