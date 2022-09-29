@@ -59,13 +59,15 @@ $debugBorder: 0px;
         .name {
           @include centerContent();
           width: 50%;
+
+          input {
+            width: 100%;
+          }
         }
       }
       button {
-        @include centerContent();
         width: 50%;
         border-top-right-radius: 5px;
-        text-decoration: none;
         border: none;
         &:focus {
           outline: none;
@@ -99,7 +101,7 @@ $debugBorder: 0px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 30px;
+    height: 35px;
     width: 100%;
 
     border-top: 1px solid black;
@@ -110,6 +112,20 @@ $debugBorder: 0px;
       display: flex;
       flex-direction: row;
       justify-content: space-around;
+
+      button {
+        text-decoration: none;
+        border: none;
+        padding: 5px;
+        &.add {
+          background-color: v.$DarkJungleGreen;
+          color: v.$Alabaster;
+        }
+        &.delete {
+          background-color: v.$Persimmon;
+          color: v.$Alabaster;
+        }
+      }
     }
   }
 }
