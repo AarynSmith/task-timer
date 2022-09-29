@@ -80,6 +80,7 @@ export default function Timer(props: {
           }`}
           onClick={(e: React.MouseEvent) => {
             if (props.delMode) {
+              localStorage.removeItem(`@timers/${props.id}`);
               props.delete();
               return;
             }
