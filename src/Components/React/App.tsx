@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocalStorage } from "../../useLocalStorage";
 import { v4 as uuidv4 } from "uuid";
 
@@ -11,11 +11,7 @@ export interface timerData {
 }
 
 export default function App() {
-  const [isDeleteMode, setDeleteMode] = useLocalStorage(
-    "@app/deleteMode",
-    false
-  );
-
+  const [isDeleteMode, setDeleteMode] = useState(false);
   const [timers, setTimers] = useLocalStorage<timerData[]>("@app/timers", []);
 
   const newTimer = () => {
