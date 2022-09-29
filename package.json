@@ -13,8 +13,6 @@
     "@types/react": "^16.9.43",
     "@types/react-dom": "^16.9.8",
     "concurrently": "^5.2.0",
-    "electron": "^9.1.0",
-    "electron-builder": "^22.7.0",
     "electron-is-dev": "^1.2.0",
     "electronmon": "^1.1.2",
     "react": "^16.13.1",
@@ -26,11 +24,11 @@
     "wait-on": "^5.1.0"
   },
   "scripts": {
-    "start": "concurrently \"yarn react-serve\" \"wait-on http://localhost:3000 && npm run electron-start\"",
-    "build": "yarn react-build && npm run electron-build",
+    "start": "concurrently \"yarn react-serve\" \"wait-on http://localhost:3000 && yarn run electron-start\"",
+    "build": "yarn react-build && yarn run electron-build --win --mac",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "release": "yarn react-build && npm run electron-release",
+    "release": "yarn react-build && yarn run electron-release",
     "electron-start": "electronmon .",
     "electron-build": "electron-builder",
     "electron-release": "electron-builder --publish=always",
@@ -56,7 +54,30 @@
   "main": "public/electron-main.js",
   "homepage": "./",
   "devDependencies": {
+    "electron": "^9.1.0",
+    "electron-builder": "^22.7.0",
     "@types/uuid": "^8.3.4",
     "electron-devtools-installer": "^3.2.0"
+  },
+  "build": {
+    "extraMetadata": {
+      "main": "build/electron.js"
+    },
+    "win": {
+      "target": {
+        "target": "portable",
+        "arch": "x64"
+      }
+    },
+    "mac": {
+      "target": {
+        "target": "pkg"
+      }
+    },
+    "files": [
+      "build/**/*",
+      "public/electron-main.js",
+      "package.json"
+    ]
   }
 }
