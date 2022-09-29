@@ -2,6 +2,9 @@
 const { app, BrowserWindow } = require("electron");
 const path = require("path");
 const isDev = require("electron-is-dev");
+const Store = require("electron-store");
+
+const store = new Store();
 
 const {
   default: installExtension,
@@ -14,8 +17,10 @@ app.whenReady().then(() => {
 });
 
 const createWindow = () => {
+  const bounds = store.get("bounds");
   // Create the browser window.
   const mainWindow = new BrowserWindow({
+    ...bounds,
     // frame: false, // removes the frame from the BrowserWindow. It is advised that you either create a custom menu bar or remove this line
     webPreferences: {
       devTools: isDev, // toggles whether devtools are available. to use node write window.require('<node-name>')
@@ -32,13 +37,21 @@ const createWindow = () => {
 
   // Open the DevTools. will only work if webPreferences::devTools is true
   mainWindow.webContents.openDevTools();
+  return mainWindow;
 };
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on("ready", () => {
-  createWindow();
+  const mainWindow = createWindow();
+
+  mainWindow.on("resize", () => {
+    store.set("bounds", mainWindow.getBounds());
+  });
+  mainWindow.on("move", () => {
+    store.set("bounds", mainWindow.getBounds());
+  });
 
   app.on("activate", () => {
     // On macOS it's common to re-create a window in the app when the

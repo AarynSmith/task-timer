@@ -14,6 +14,7 @@
     "@types/react-dom": "^16.9.8",
     "concurrently": "^5.2.0",
     "electron-is-dev": "^1.2.0",
+    "electron-store": "^8.1.0",
     "electronmon": "^1.1.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -54,9 +55,9 @@
   "main": "public/electron-main.js",
   "homepage": "./",
   "devDependencies": {
+    "@types/uuid": "^8.3.4",
     "electron": "^9.1.0",
     "electron-builder": "^22.7.0",
-    "@types/uuid": "^8.3.4",
     "electron-devtools-installer": "^3.2.0"
   },
   "build": {
