@@ -21,7 +21,7 @@ export default function Timer(props: {
   delMode: boolean;
   delete: () => void;
 }) {
-  const [timer, setTimer] = useLocalStorage(`@timers/${props.id}`, {
+  const [timer, setTimer] = useLocalStorage<timerData>(`@timers/${props.id}`, {
     ...defaultTimerData,
     id: props.id,
   });

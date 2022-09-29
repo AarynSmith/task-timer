@@ -8,8 +8,11 @@ function getStorageValue(key: string, defaultValue: any) {
   return initial || defaultValue;
 }
 
-export const useLocalStorage = (key: string, defaultValue: any) => {
-  const [value, setValue] = useState(() => {
+export const useLocalStorage = <Type>(
+  key: string,
+  defaultValue: Type
+): [Type, React.Dispatch<React.SetStateAction<Type>>] => {
+  const [value, setValue] = useState<Type>(() => {
     return getStorageValue(key, defaultValue);
   });
 

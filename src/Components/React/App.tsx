@@ -16,7 +16,7 @@ export default function App() {
     false
   );
 
-  const [timers, setTimers] = useLocalStorage("@app/timers", [] as timerData[]);
+  const [timers, setTimers] = useLocalStorage<timerData[]>("@app/timers", []);
 
   const newTimer = () => {
     const timerList = timers.slice();
