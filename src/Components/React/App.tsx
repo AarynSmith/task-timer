@@ -60,7 +60,6 @@ export default function App() {
           <button
             className="delete"
             onClick={() => {
-              console.log("Toggling delete mode");
               setDeleteMode(!isDeleteMode);
             }}
           >
