@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocalStorage } from "../../useLocalStorage";
 import { formatTime } from "../../Utilities";
 
@@ -26,6 +26,9 @@ export default function Timer(props: {
     id: props.id,
   });
 
+  const [nameInput, setNameInput] = useState(timer.name);
+  const [inputActive, setInputActive] = useState(false);
+
   useEffect(() => {
     let interval: string | NodeJS.Timeout = "";
     if (timer.running) {
@@ -44,17 +47,42 @@ export default function Timer(props: {
   return (
     <div className="timer">
       <div className="topRow">
-        <div className="name">{timer.name}</div>
+        <div
+          className="name"
+          onClick={() => {
+            setInputActive(true);
+          }}
+        >
+          {inputActive ? (
+            <input
+              autoFocus={true}
+              defaultValue={nameInput}
+              onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                setNameInput(e.currentTarget.value);
+              }}
+              onKeyDown={(e: React.KeyboardEvent) => {
+                if (e.key === "Enter" || e.key === "Tab") {
+                  setTimer({
+                    ...timer,
+                    name: nameInput,
+                  });
+                  setInputActive(false);
+                }
+              }}
+            />
+          ) : (
+            timer.name
+          )}
+        </div>
         <button
           className={`${
             props.delMode ? "delete" : timer.running ? "stop" : "start"
           }`}
-          onClick={(e) => {
+          onClick={(e: React.MouseEvent) => {
             if (props.delMode) {
               props.delete();
               return;
             }
-            console.log(e);
             setTimer({
               ...timer,
               running: !timer.running,
