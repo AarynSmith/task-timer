@@ -44,6 +44,13 @@ export default function Timer(props: {
     return () => clearInterval(interval);
   }, [timer, setTimer]);
 
+  const saveTimerName = () => {
+    setTimer({
+      ...timer,
+      name: nameInput,
+    });
+    setInputActive(false);
+  };
   return (
     <div className="timer">
       <div className="topRow">
@@ -60,13 +67,12 @@ export default function Timer(props: {
               onChange={(e: React.FormEvent<HTMLInputElement>) => {
                 setNameInput(e.currentTarget.value);
               }}
+              onBlur={() => {
+                saveTimerName();
+              }}
               onKeyDown={(e: React.KeyboardEvent) => {
                 if (e.key === "Enter" || e.key === "Tab") {
-                  setTimer({
-                    ...timer,
-                    name: nameInput,
-                  });
-                  setInputActive(false);
+                  saveTimerName();
                 }
               }}
             />
