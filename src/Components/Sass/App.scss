@@ -1,0 +1,131 @@
+@use "./Variables" as v;
+
+$debugBorder: 0px;
+
+@mixin debug-box($color) {
+  box-sizing: border-box;
+  border: $debugBorder dashed $color;
+}
+
+@mixin centerContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#appContainer {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: v.$themeWindowBg;
+  color: v.$themeTextColor;
+
+  .timerContainer {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    overflow: scroll;
+
+    .timer {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+
+      min-width: v.$timerWidth;
+      max-width: v.$timerWidth;
+      min-height: v.$timerHeight;
+      max-height: v.$timerHeight;
+
+      background-color: v.$themeTimerBg;
+
+      margin: v.$timerMargin;
+      border-width: 1px;
+      border-radius: 5px;
+      box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.25);
+
+      .topRow {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        overflow: hidden;
+        max-height: 25px;
+        min-height: 25px;
+
+        .name {
+          @include centerContent();
+          width: 50%;
+
+          input {
+            width: 100%;
+          }
+        }
+      }
+      button {
+        width: 50%;
+        border-top-right-radius: 5px;
+        border: none;
+        &:focus {
+          outline: none;
+          box-shadow: none;
+        }
+
+        &.delete {
+          background-color: v.$themeDeleteBtn;
+          color: v.$themeDeleteTxt;
+          font-weight: bold;
+        }
+        &.stop {
+          background-color: v.$themeStopBtn;
+          color: v.$themeStopTxt;
+        }
+        &.start {
+          background-color: v.$themeStartBtn;
+          color: v.$themeStartTxt;
+        }
+      }
+    }
+
+    .time {
+      @include centerContent();
+      font-size: 30pt;
+    }
+  }
+  .buttonBar {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 35px;
+    width: 100%;
+
+    border-top: 1px solid black;
+    background-color: v.$themeBottomBarBg;
+
+    .buttonRow {
+      width: 60%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+
+      button {
+        text-decoration: none;
+        border: none;
+        padding: 5px;
+        &.add {
+          background-color: v.$DarkJungleGreen;
+          color: v.$Alabaster;
+        }
+        &.delete {
+          background-color: v.$Persimmon;
+          color: v.$Alabaster;
+        }
+      }
+    }
+  }
+}

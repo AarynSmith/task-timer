@@ -7,7 +7,7 @@ export const formatTime = (s: number): string => {
     rtn += `${Math.floor(s / 3600)}:`;
     s = s % 3600;
   }
-  if (s >= 60 || rtn != "") {
+  if (s >= 60 || rtn !== "") {
     if (o >= 3600) {
       rtn += `${zeroPad(Math.floor(s / 60), 2)}:`;
     } else {
