@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocalStorage } from "../../useLocalStorage";
+import useLocalStorage from "../../useLocalStorage";
 import { formatTime } from "../../Utilities";
 
 export interface timerData {

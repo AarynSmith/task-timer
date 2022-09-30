@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocalStorage } from "../../useLocalStorage";
+import useLocalStorage from "../../useLocalStorage";
 import { v4 as uuidv4 } from "uuid";
 
 import "../Sass/App.scss";
