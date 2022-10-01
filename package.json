@@ -1,6 +1,6 @@
 {
   "name": "task-timer",
-  "version": "0.1.0",
+  "version": "0.7.0",
   "author": "Aaryn Smith <github.com/aarynSmith>",
   "description": "Multiple Task Timer",
   "private": true,
