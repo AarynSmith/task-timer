@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import useLocalStorage from "../../useLocalStorage";
 import { v4 as uuidv4 } from "uuid";
+import useKeyPress from "../../useKeyPress";
 
 import "../Sass/App.scss";
 import Timer from "./Timer";
@@ -13,6 +14,8 @@ export interface timerData {
 export default function App() {
   const [isDeleteMode, setDeleteMode] = useState(false);
   const [timers, setTimers] = useLocalStorage<timerData[]>("@app/timers", []);
+
+  const f1Pressed: boolean = useKeyPress("F1");
 
   const newTimer = () => {
     const timerList = timers.slice();
@@ -62,7 +65,28 @@ export default function App() {
             {isDeleteMode ? "Return" : "Delete Timer"}
           </button>
         </div>
-      </div>
+      </div>{" "}
+      {f1Pressed ? (
+        <div className="messageBox">
+          <div>
+            Made with&nbsp;
+            <span role="img" aria-label="love">
+              ❤️
+            </span>
+            &nbsp;by&nbsp;
+            <a
+              href="https://github.com/aarynSmith/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Aaryn
+            </a>
+            &nbsp;for Grace
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
