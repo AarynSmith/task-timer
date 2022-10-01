@@ -37,6 +37,13 @@ const createWindow = () => {
 
   // Open the DevTools. will only work if webPreferences::devTools is true
   mainWindow.webContents.openDevTools();
+
+  // Open new windows in browser
+  mainWindow.webContents.on("new-window", function (e, url) {
+    e.preventDefault();
+    require("electron").shell.openExternal(url);
+  });
+
   return mainWindow;
 };
 
