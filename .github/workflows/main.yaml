@@ -8,6 +8,12 @@ on:
 
 jobs:
   build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+
     runs-on: ubuntu-latest
     env:
       CI: true
@@ -27,10 +33,12 @@ jobs:
         run: yarn test
 
       - name: Build Applications
-        run: yarn build
+        uses: samuelmeuli/action-electron-builder@v1
+          with:
+            # GitHub token, automatically provided to the action
+            # (No need to define this secret in the repo settings)
+            github_token: ${{ secrets.ACCESS_TOKEN }}
 
-      - name: Release Artifacts
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "dist/mac/*.app,dist/task-timer*.exe"
-          token: ${{ secrets.ACCESS_TOKEN }}
+            # If the commit is tagged with a version (e.g. "v1.0.0"),
+            # release the app after building
+            release: ${{ startsWith(github.ref, 'refs/tags/v') }}
