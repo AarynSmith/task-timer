@@ -1,6 +1,6 @@
 {
   "name": "task-timer",
-  "version": "0.7.0",
+  "version": "0.8.3",
   "author": "Aaryn Smith <github.com/aarynSmith>",
   "description": "Multiple Task Timer",
   "private": true,
@@ -26,7 +26,8 @@
   },
   "scripts": {
     "start": "concurrently \"yarn react-serve\" \"wait-on http://localhost:3000 && yarn run electron-start\"",
-    "build": "yarn react-build && yarn run electron-build --win --mac",
+    "build": "yarn react-build",
+    "build-full": "yarn react-build && yarn run electron-build --win --mac",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "release": "yarn react-build && yarn run electron-release",
@@ -68,12 +69,26 @@
       "target": {
         "target": "portable",
         "arch": "x64"
-      }
+      },
+      "publish": [
+        "github"
+      ]
     },
     "mac": {
       "target": {
         "target": "pkg"
-      }
+      },
+      "publish": [
+        "github"
+      ]
+    },
+    "linux": {
+      "target": {
+        "target": "deb"
+      },
+      "publish": [
+        "github"
+      ]
     },
     "files": [
       "build/**/*",
