@@ -26,8 +26,8 @@
   },
   "scripts": {
     "start": "concurrently \"yarn react-serve\" \"wait-on http://localhost:3000 && yarn run electron-start\"",
-    "build": "yarn react-build && yarn run electron-build",
-    "build-all": "yarn react-build && yarn run electron-build --win --mac",
+    "build": "yarn react-build",
+    "build-full": "yarn react-build && yarn run electron-build --win --mac",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "release": "yarn react-build && yarn run electron-release",
@@ -70,19 +70,25 @@
         "target": "portable",
         "arch": "x64"
       },
-      "publish": ["github"]
+      "publish": [
+        "github"
+      ]
     },
     "mac": {
       "target": {
         "target": "pkg"
       },
-      "publish": ["github"]
+      "publish": [
+        "github"
+      ]
     },
     "linux": {
       "target": {
         "target": "deb"
       },
-      "publish": ["github"]
+      "publish": [
+        "github"
+      ]
     },
     "files": [
       "build/**/*",

@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - "main"
-      - "github-actions"
 
   workflow_dispatch:
 
@@ -37,4 +36,4 @@ jobs:
         uses: samuelmeuli/action-electron-builder@v1.6.0
         with:
           github_token: ${{ secrets.github_token }}
-          release: true
+          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
