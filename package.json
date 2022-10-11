@@ -1,6 +1,6 @@
 {
   "name": "task-timer",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "author": "Aaryn Smith <github.com/aarynSmith>",
   "description": "Multiple Task Timer",
   "private": true,
@@ -69,12 +69,20 @@
       "target": {
         "target": "portable",
         "arch": "x64"
-      }
+      },
+      "publish": ["github"]
     },
     "mac": {
       "target": {
         "target": "pkg"
-      }
+      },
+      "publish": ["github"]
+    },
+    "linux": {
+      "target": {
+        "target": "deb"
+      },
+      "publish": ["github"]
     },
     "files": [
       "build/**/*",
